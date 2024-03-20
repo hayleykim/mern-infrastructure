@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
+
 require('dotenv').config();
 // Connect to the database
 require('./config/database');
@@ -16,17 +17,16 @@ app.use(require('./config/checkToken'));
 
 const port = process.env.PORT || 3001;
 
-// Put API routes here, before the "catch all" route
-app.use('/api/users', require('./routes/api/users'));
-
-//Responding any URLs we don't recognise by sending the React index.html
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-})
-
-
-
 app.listen(port, function () {
     console.log(`Express running on http://localhost:${ port }`);
 });
 
+// Put API routes here, before the "catch all" route
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/notes', require('./routes/api/notes'));
+
+
+//Responding any URLs we don't recognise by sending the React index.html
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
