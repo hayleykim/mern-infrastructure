@@ -14,8 +14,6 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use(require('./config/checkToken'));
 
-const port = process.env.PORT || 3001;
-
 // Put API routes here, before the "catch all" route
 app.use('/api/users', require('./routes/api/users'));
 
@@ -24,7 +22,7 @@ app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 })
 
-
+const port = process.env.PORT || 3001;
 
 app.listen(port, function () {
     console.log(`Express running on http://localhost:${ port }`);
